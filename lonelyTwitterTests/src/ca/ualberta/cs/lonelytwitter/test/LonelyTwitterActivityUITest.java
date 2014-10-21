@@ -1,15 +1,21 @@
 package ca.ualberta.cs.lonelytwitter.test;
 
+import java.io.PrintStream;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ca.ualberta.cs.lonelytwitter.IntentReaderActivity;
 import ca.ualberta.cs.lonelytwitter.LonelyTwitterActivity;
 import ca.ualberta.cs.lonelytwitter.NormalTweetModel;
+import ca.ualberta.cs.lonelytwitter.R;
 
 /*
  * generate this class with new.. JUnit Test Case
@@ -30,7 +36,6 @@ public class LonelyTwitterActivityUITest extends
 		super.setUp();
 		instrumentation = getInstrumentation();
 		activity = getActivity();
-
 		textInput = ((EditText) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.body));
 	}
 	
@@ -42,5 +47,20 @@ public class LonelyTwitterActivityUITest extends
 		assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save));
 		textInput.setText(text);
 		((Button) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save)).performClick();
+	}
+	
+	public void testMakeTweet() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				makeTweet("hello there");
+			}
+			
+		});
+		
+		ListView widget = (ListView) activity.findViewById(R.id.oldTweetsList);
+		Adapter adapter = widget.getAdapter();
+		
 	}
 }

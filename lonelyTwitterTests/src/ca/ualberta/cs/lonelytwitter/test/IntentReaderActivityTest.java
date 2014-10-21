@@ -3,6 +3,8 @@ package ca.ualberta.cs.lonelytwitter.test;
 import ca.ualberta.cs.lonelytwitter.IntentReaderActivity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ViewAsserts;
+import android.view.View;
 import android.widget.TextView;
 
 public class IntentReaderActivityTest extends
@@ -74,4 +76,12 @@ public class IntentReaderActivityTest extends
 		TextView widget = (TextView) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.intentText);
 		assertEquals("No text was entered.", widget.getText());
 	}
+	
+	public void testVisibleTextView() {
+		IntentReaderActivity activity = (IntentReaderActivity) getActivity();
+		View decorview = activity.getWindow().getDecorView();
+		TextView widget = (TextView) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.intentText);
+		ViewAsserts.assertOnScreen(decorview, widget);
+	}
+	
 }

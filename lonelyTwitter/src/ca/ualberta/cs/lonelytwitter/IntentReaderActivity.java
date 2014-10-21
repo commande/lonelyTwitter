@@ -46,7 +46,6 @@ public class IntentReaderActivity extends Activity {
 			widget.setText("No text was entered.");
 		}
 		
-		
 	}
 	
 	public String transformText(String text) {
