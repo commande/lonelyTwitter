@@ -21,10 +21,32 @@ public class IntentReaderActivity extends Activity {
 		return text;
 	}
 	
+	/**
+	 * isEqual referenced from:
+	 * http://stackoverflow.com/questions/5661936/java-clean-way-of-avoiding-nullpointerexception-in-equals-checks
+	 * by user: Peter Lawrey
+	 * on Oct 21, 2014
+	 */
+	public static boolean isEqual(Object o1, Object o2) {
+	    return o1 == o2 || (o1 != null && o1.equals(o2));
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intent_reader);
+		Intent intent = getIntent();
+		text = intent.getStringExtra(TEXT_KEY);
+		mode = intent.getIntExtra(TRANSFORM_KEY, NORMAL);
+		text = transformText(text);
+		TextView widget = (TextView) findViewById(R.id.intentText);
+		widget.setText(text);
+		
+		if (isEqual(text, "")) {
+			widget.setText("No text was entered.");
+		}
+		
+		
 	}
 	
 	public String transformText(String text) {
